@@ -7,6 +7,9 @@ import com.outforce.coupon.infrastructure.adapter.out.repository.CouponRepositor
 import com.outforce.coupon.infrastructure.config.MyModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Component
 public class CouponRepositoryAdapter implements CouponRepositoryPort {
 
@@ -23,5 +26,11 @@ public class CouponRepositoryAdapter implements CouponRepositoryPort {
     public Coupon save(Coupon coupon) {
         CouponEntity couponEntity = mapper.mapTo(coupon, CouponEntity.class);
         return mapper.mapTo(couponRepository.save(couponEntity),Coupon.class);
+    }
+
+    @Override
+    public Optional<Coupon> findById(UUID id) {
+        return couponRepository.findById(id)
+                .map(couponEntity -> mapper.mapTo(couponEntity, Coupon.class));
     }
 }

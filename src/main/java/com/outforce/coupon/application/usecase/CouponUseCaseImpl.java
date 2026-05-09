@@ -4,6 +4,9 @@ import com.outforce.coupon.application.usecase.command.CreateCouponCommand;
 import com.outforce.coupon.application.usecase.port.in.CouponUseCase;
 import com.outforce.coupon.application.usecase.port.out.CouponRepositoryPort;
 import com.outforce.coupon.domain.entity.Coupon;
+import com.outforce.coupon.domain.exception.CouponNotFoundException;
+
+import java.util.UUID;
 
 public class CouponUseCaseImpl implements CouponUseCase {
 
@@ -23,5 +26,11 @@ public class CouponUseCaseImpl implements CouponUseCase {
                 couponCommand.published()
         );
         return couponRepositoryPort.save(coupon);
+    }
+
+    @Override
+    public Coupon findById(UUID uuid) {
+        return couponRepositoryPort.findById(uuid)
+                .orElseThrow(() -> new CouponNotFoundException("Coupon not found"));
     }
 }
