@@ -1,6 +1,7 @@
 package com.outforce.coupon.infrastructure.adapter.in.exception;
 
 import com.outforce.coupon.domain.exception.BusinessRuleViolationException;
+import com.outforce.coupon.domain.exception.CouponNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessRuleViolationException.class)
     public ResponseEntity<ErrorDetails> handleBusinessRuleViolation(BusinessRuleViolationException ex){
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        ErrorDetails errorResponse = new ErrorDetails(Instant.now(), status.value(), ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(errorResponse);
+    }
+
+    @ExceptionHandler(CouponNotFoundException.class)
+    public ResponseEntity<ErrorDetails> handleNotFound(CouponNotFoundException ex){
+        HttpStatus status = HttpStatus.NOT_FOUND;
         ErrorDetails errorResponse = new ErrorDetails(Instant.now(), status.value(), ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(errorResponse);
     }
