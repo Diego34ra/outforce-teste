@@ -1,0 +1,10 @@
+services:
+  coupon-api:
+    image: diegodev34/outforce-teste:1.0.0
+    container_name: coupon-api
+    environment:
+      SERVER_PORT: 8081
+      DB_USERNAME: admin
+      DB_PASSWORD: admin
+    ports:
+      - "8081:8081"
