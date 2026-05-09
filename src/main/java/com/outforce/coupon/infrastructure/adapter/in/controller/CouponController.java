@@ -42,4 +42,10 @@ public class CouponController {
         CouponResponse couponResponse = mapper.mapTo(couponUseCase.findById(id),CouponResponse.class);
         return ResponseEntity.status(HttpStatus.OK).body(couponResponse);
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        couponUseCase.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

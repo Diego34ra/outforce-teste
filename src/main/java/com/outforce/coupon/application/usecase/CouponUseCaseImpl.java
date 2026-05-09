@@ -33,4 +33,11 @@ public class CouponUseCaseImpl implements CouponUseCase {
         return couponRepositoryPort.findById(uuid)
                 .orElseThrow(() -> new CouponNotFoundException("Coupon not found"));
     }
+
+    @Override
+    public void delete(UUID uuid) {
+        Coupon coupon = findById(uuid);
+        coupon.delete();
+        couponRepositoryPort.save(coupon);
+    }
 }

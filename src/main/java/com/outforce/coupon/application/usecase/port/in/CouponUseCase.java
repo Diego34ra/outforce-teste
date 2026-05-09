@@ -9,4 +9,6 @@ public interface CouponUseCase {
     Coupon create(CreateCouponCommand coupon);
 
     Coupon findById(UUID uuid);
+
+    void delete(UUID uuid);
 }
